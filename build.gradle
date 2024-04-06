@@ -59,20 +59,25 @@ dependencies {
     //modImplementation ('com.blamejared.crafttweaker:CraftTweaker-fabric-1.20.4:17.0.12')
 }
 
+fabricApi {
+    configureDataGeneration {
+        modId = "alloy_forgery"
+    }
+}
+
 loom {
     accessWidenerPath = file("src/main/resources/alloy_forgery.accesswidener")
 
     runs {
-
-        datagenClient {
-            inherit client
-            name "Data Generation"
-            vmArg "-Dfabric-api.datagen"
-            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated_resources")}"
-            vmArg "-Dfabric-api.datagen.modid=alloy_forgery"
-
-            runDir "build/datagen"
-        }
+//        datagenClient {
+//            inherit client
+//            name "Data Generation"
+//            vmArg "-Dfabric-api.datagen"
+//            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated_resources")}"
+//            vmArg "-Dfabric-api.datagen.modid=alloy_forgery"
+//
+//            runDir "build/datagen"
+//        }
 
         client_mixin {
             client()
