@@ -9,7 +9,7 @@ import wraith.alloyforgery.AlloyForgery;
 @Config(name = AlloyForgery.MOD_ID, wrapperName = "AlloyForgeryConfig")
 public class AlloyForgeryConfigModel {
 
-    public boolean strictRecipeChecks = false;
+    public boolean strictRecipeChecks = true;
 
     @SectionHeader("blasting_adaption")
     public boolean allowHigherTierOutput = true;
