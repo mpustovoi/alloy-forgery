@@ -11,7 +11,7 @@ import wraith.alloyforgery.compat.LegacyIdMappings;
 @Mixin(SimpleDefaultedRegistry.class)
 public class DefaultedRegistryMixin {
     @ModifyVariable(at = @At("HEAD"), method = "get(Lnet/minecraft/util/Identifier;)Ljava/lang/Object;", ordinal = 0, argsOnly = true)
-    Identifier fixMissingFromRegistry(@Nullable Identifier id) {
+    private Identifier fixMissingFromRegistry(@Nullable Identifier id) {
         return LegacyIdMappings.remap(id);
     }
 }

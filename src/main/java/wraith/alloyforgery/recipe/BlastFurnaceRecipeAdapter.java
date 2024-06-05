@@ -22,7 +22,7 @@ import java.util.Optional;
  */
 public class BlastFurnaceRecipeAdapter implements RecipeInjector.AddRecipes {
 
-    private static final TagKey<Item> DUSTS_TAG = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "dusts"));
+    private static final TagKey<Item> DUSTS_TAG = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dusts"));
 
     /**
      * Recipe tag for all {@link RecipeType#BLASTING} recipes to be disallowed for adaption

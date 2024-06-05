@@ -12,6 +12,7 @@ import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
@@ -27,7 +28,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class AlloyForgeRecipe implements Recipe<Inventory> {
+public class AlloyForgeRecipe implements Recipe<AlloyForgeRecipeInput> {
 
     private static final Map<Item, ItemStack> GLOBAL_REMAINDERS = new HashMap<>();
 
@@ -110,11 +111,11 @@ public class AlloyForgeRecipe implements Recipe<Inventory> {
     }
 
     @Override
-    public boolean matches(Inventory inventory, World world) {
-        return tryBind(inventory) != null;
+    public boolean matches(AlloyForgeRecipeInput input, World world) {
+        return tryBind(input) != null;
     }
 
-    public Int2IntMap tryBind(Inventory inventory) {
+    public Int2IntMap tryBind(AlloyForgeRecipeInput input) {
         var indices = new ConcurrentLinkedQueue<>(INPUT_SLOT_INDICES);
         var boundSlots = new Int2IntLinkedOpenHashMap();
 
@@ -122,7 +123,7 @@ public class AlloyForgeRecipe implements Recipe<Inventory> {
             int remaining = ingredient.getValue();
 
             for (int index : indices) {
-                var stack = inventory.getStack(index);
+                var stack = input.getStackInSlot(index);
 
                 if (ingredient.getKey().test(stack)) {
                     boundSlots.put(index, Math.min(stack.getCount(), remaining));
@@ -140,7 +141,7 @@ public class AlloyForgeRecipe implements Recipe<Inventory> {
 
         verification:
         for (int index : indices) {
-            var stack = inventory.getStack(index);
+            var stack = input.getStackInSlot(index);
             if (stack.isEmpty()) continue;
 
             for (var ingredient : this.inputs.keySet()) {
@@ -176,20 +177,21 @@ public class AlloyForgeRecipe implements Recipe<Inventory> {
     // Attempt to test if the passed inventory is a Controller to try and get the forgeTier
     // Better to use the getOutput though other means rather than this if not a controller
     @Override
-    public ItemStack craft(Inventory inventory, DynamicRegistryManager drm) {
-        return (inventory instanceof ForgeControllerBlockEntity controller)
+    public ItemStack craft(AlloyForgeRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
+        return (input.inventory() instanceof ForgeControllerBlockEntity controller)
                 ? getResult(controller.getForgeDefinition().forgeTier())
-                : getResult(drm);
+                : getResult(lookup);
     }
 
-    public void consumeIngredients(Inventory inventory) {
-        this.tryBind(inventory).forEach(inventory::removeStack);
+    public void consumeIngredients(AlloyForgeRecipeInput input) {
+        var inventory = input.inventory();
+        this.tryBind(input).forEach(inventory::removeStack);
     }
 
     @Nullable
-    public static DefaultedList<ItemStack> gatherRemainders(RecipeEntry<AlloyForgeRecipe> recipeEntry, Inventory inventory) {
+    public static DefaultedList<ItemStack> gatherRemainders(RecipeEntry<AlloyForgeRecipe> recipeEntry, AlloyForgeRecipeInput input) {
         final var recipe = recipeEntry.value();
-        final var remainders = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
+        final var remainders = DefaultedList.ofSize(input.getSize(), ItemStack.EMPTY);
         //noinspection UnstableApiUsage
         final var owoRemainders = RecipeRemainderStorage.has(recipeEntry.id()) ? RecipeRemainderStorage.get(recipeEntry.id()) : Map.<Item, ItemStack>of();
 
@@ -197,8 +199,8 @@ public class AlloyForgeRecipe implements Recipe<Inventory> {
 
         var setAnyRemainders = false;
 
-        for (int i : recipe.tryBind(inventory).keySet()) {
-            var item = inventory.getStack(i).getItem();
+        for (int i : recipe.tryBind(input).keySet()) {
+            var item = input.getStackInSlot(i).getItem();
 
             if (!owoRemainders.isEmpty()) {
                 if (!owoRemainders.containsKey(item)) continue;
@@ -225,7 +227,7 @@ public class AlloyForgeRecipe implements Recipe<Inventory> {
     @Override
     @ApiStatus.Internal
     @Deprecated
-    public ItemStack getResult(DynamicRegistryManager drm) {
+    public ItemStack getResult(RegistryWrapper.WrapperLookup lookup) {
         return this.output.copy();
     }
 

@@ -115,30 +115,4 @@ public record ForgeDefinition(int forgeTier,
                 ", additionalMaterials=" + additionalMaterials +
                 '}';
     }
-
-    private static <T, L extends List<T>> Endec<L> listOf(Endec<T> endec, ListBuilder<T, L> listBuilder) {
-        return Endec.of((serializer, list) -> {
-            try (var sequence = serializer.sequence(endec, list.size())) {
-                list.forEach(sequence::element);
-            }
-        }, deserializer -> {
-            var sequenceState = deserializer.sequence(endec);
-
-            return listBuilder.create(sequenceState.estimatedSize(), sequenceState::forEachRemaining);
-        });
-    }
-
-    public interface ListBuilder<T, L extends List<T>> {
-        L create(int estimatedSize, Consumer<Consumer<T>> collector);
-
-        static <T> ListBuilder<T, ImmutableList<T>> ofImmutable(){
-            return (estimatedSize, collector) -> {
-                var builder = ImmutableList.<T>builderWithExpectedSize(estimatedSize);
-
-                collector.accept(builder::add);
-
-                return builder.build();
-            };
-        }
-    }
 }

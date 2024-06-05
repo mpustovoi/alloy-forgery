@@ -1,12 +1,10 @@
 package wraith.alloyforgery;
 
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import wraith.alloyforgery.block.ForgeControllerBlock;
 import wraith.alloyforgery.forges.ForgeDefinition;
 import java.util.List;
@@ -18,7 +16,7 @@ public class ForgeControllerItem extends BlockItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.translatable("tooltip.alloy_forgery.forge_tier", getForgeDefinition().forgeTier()).formatted(Formatting.GRAY));
         tooltip.add(Text.translatable("tooltip.alloy_forgery.fuel_capacity", getForgeDefinition().fuelCapacity()).formatted(Formatting.GRAY));
     }

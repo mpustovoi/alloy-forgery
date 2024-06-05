@@ -1,12 +1,16 @@
 package wraith.alloyforgery.utils;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.mojang.logging.LogUtils;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
@@ -38,8 +42,8 @@ public final class RecipeInjector {
 
     private final RecipeManager manager;
 
-    private final Map<RecipeType<?>, Map<Identifier, RecipeEntry<Recipe<?>>>> recipes = new HashMap<>();
-    private final Map<Identifier, RecipeEntry<Recipe<?>>> recipesById = new HashMap<>();
+    private final Multimap<RecipeType<?>, RecipeEntry<?>> recipes = HashMultimap.create();
+    private final Map<Identifier, RecipeEntry<?>> recipesById = new HashMap<>();
 
     public RecipeInjector(RecipeManager manager) {
         this.manager = manager;
@@ -53,12 +57,12 @@ public final class RecipeInjector {
      * @param recipe The Recipe
      * @param <T>    Type of the given Recipe
      */
-    public <T extends Recipe<C>, C extends Inventory> void addRecipe(Identifier id, T recipe) {
+    public <R extends Recipe<T>, T extends RecipeInput> void addRecipe(Identifier id, R recipe) {
         if (Registries.RECIPE_TYPE.getId(recipe.getType()) == null) {
             throw new IllegalStateException("Unable to add Recipe for a RecipeType not registered!");
         }
 
-        var type = (RecipeType<T>) recipe.getType();
+        var type = (RecipeType<R>) recipe.getType();
 
         var bl = manager.listAllOfType(type)
                 .stream()
@@ -70,8 +74,10 @@ public final class RecipeInjector {
             return;
         }
 
-        recipes.computeIfAbsent(recipe.getType(), t -> new HashMap<>()).put(id, new RecipeEntry<>(id, recipe));
-        recipesById.put(id, new RecipeEntry<>(id, recipe));
+        var recipeEntry = new RecipeEntry<>(id, recipe);
+
+        recipes.put(recipe.getType(), recipeEntry);
+        recipesById.put(id, recipeEntry);
     }
 
     /**
@@ -104,13 +110,10 @@ public final class RecipeInjector {
 
         var managerAccessor = (RecipeManagerAccessor) manager;
 
-        managerAccessor.af$getRecipes().forEach((recipeType, identifierRecipeMap) -> {
-            injector.recipes.computeIfAbsent(recipeType, t -> new HashMap<>()).putAll(identifierRecipeMap);
-        });
-
+        injector.recipes.putAll(managerAccessor.af$getRecipes());
         injector.recipesById.putAll(managerAccessor.af$getRecipesById());
 
-        managerAccessor.af$setRecipes(ImmutableMap.copyOf(injector.recipes));
+        managerAccessor.af$setRecipes(ImmutableMultimap.copyOf(injector.recipes));
         managerAccessor.af$setRecipesById(ImmutableMap.copyOf(injector.recipesById));
 
         injector.recipes.clear();

@@ -21,7 +21,7 @@ public class DataPackContentsMixin {
     @Shadow @Final private RecipeManager recipeManager;
 
     @Inject(method = "refresh", at = @At("TAIL"))
-    private void alloy_forgery$onRefresh(DynamicRegistryManager dynamicRegistryManager, CallbackInfo ci) {
+    private void alloy_forgery$onRefresh(CallbackInfo ci) {
         var recipeEntries = recipeManager.listAllOfType(AlloyForgeRecipe.Type.INSTANCE);
 
         var map = new HashMap<AlloyForgeRecipe, Identifier>();
@@ -30,7 +30,6 @@ public class DataPackContentsMixin {
             map.put(entry.value(), entry.id());
         }
 
-        AlloyForgeRecipe.PENDING_RECIPES.forEach((recipe, pendingRecipeData) -> recipe.finishRecipe(pendingRecipeData, key -> map.getOrDefault(key, new Identifier(AlloyForgery.MOD_ID, "unknown_recipe"))));
+        AlloyForgeRecipe.PENDING_RECIPES.forEach((recipe, pendingRecipeData) -> recipe.finishRecipe(pendingRecipeData, key -> map.getOrDefault(key, Identifier.of(AlloyForgery.MOD_ID, "unknown_recipe"))));
     }
-
 }

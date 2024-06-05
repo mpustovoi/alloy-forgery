@@ -3,6 +3,7 @@ package wraith.alloyforgery.recipe;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import io.wispforest.owo.serialization.Endec;
 import io.wispforest.owo.serialization.StructEndec;
@@ -35,7 +36,7 @@ public record RawAlloyForgeRecipe(Map<Ingredient, Integer> inputs, OutputData ou
             if(o == null) return 0;
 
             try {
-                stringData = Util.getResult(Ingredient.ALLOW_EMPTY_CODEC.encodeStart(JsonOps.INSTANCE, o), IllegalStateException::new).toString();
+                stringData = Ingredient.ALLOW_EMPTY_CODEC.encodeStart(JsonOps.INSTANCE, o).getOrThrow(IllegalStateException::new).toString();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -51,13 +52,13 @@ public record RawAlloyForgeRecipe(Map<Ingredient, Integer> inputs, OutputData ou
             String stringDataB;
 
             try {
-                stringDataA = Util.getResult(Ingredient.ALLOW_EMPTY_CODEC.encodeStart(JsonOps.INSTANCE, a), IllegalStateException::new).toString();
+                stringDataA = Ingredient.ALLOW_EMPTY_CODEC.encodeStart(JsonOps.INSTANCE, a).getOrThrow(IllegalStateException::new).toString();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
             try {
-                stringDataB = Util.getResult(Ingredient.ALLOW_EMPTY_CODEC.encodeStart(JsonOps.INSTANCE, b), IllegalStateException::new).toString();
+                stringDataB = Ingredient.ALLOW_EMPTY_CODEC.encodeStart(JsonOps.INSTANCE, b).getOrThrow(IllegalStateException::new).toString();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

@@ -1,5 +1,6 @@
 package wraith.alloyforgery.mixin;
 
+import com.google.common.collect.Multimap;
 import net.minecraft.recipe.*;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -8,15 +9,15 @@ import java.util.Map;
 
 @Mixin(RecipeManager.class)
 public interface RecipeManagerAccessor {
-    @Accessor("recipes")
-    Map<RecipeType<?>, Map<Identifier, RecipeEntry<Recipe<?>>>> af$getRecipes();
+    @Accessor("recipesByType")
+    Multimap<RecipeType<?>, RecipeEntry<?>> af$getRecipes();
 
-    @Accessor("recipes")
-    void af$setRecipes(Map<RecipeType<?>, Map<Identifier, RecipeEntry<Recipe<?>>>> recipes);
-
-    @Accessor("recipesById")
-    Map<Identifier, RecipeEntry<Recipe<?>>> af$getRecipesById();
+    @Accessor("recipesByType")
+    void af$setRecipes(Multimap<RecipeType<?>, RecipeEntry<?>> recipesByType);
 
     @Accessor("recipesById")
-    void af$setRecipesById(Map<Identifier, RecipeEntry<Recipe<?>>> recipesById);
+    Map<Identifier, RecipeEntry<?>> af$getRecipesById();
+
+    @Accessor("recipesById")
+    void af$setRecipesById(Map<Identifier, RecipeEntry<?>> recipesById);
 }

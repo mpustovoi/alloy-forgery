@@ -2,6 +2,8 @@ package wraith.alloyforgery.block;
 
 import com.google.common.collect.ImmutableList;
 import io.wispforest.owo.ops.ItemOps;
+import io.wispforest.owo.serialization.format.nbt.NbtDeserializer;
+import io.wispforest.owo.serialization.format.nbt.NbtSerializer;
 import io.wispforest.owo.util.ImplementedInventory;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
@@ -20,6 +22,7 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -33,6 +36,9 @@ import wraith.alloyforgery.AlloyForgery;
 import wraith.alloyforgery.forges.*;
 import wraith.alloyforgery.mixin.HopperBlockEntityAccessor;
 import wraith.alloyforgery.recipe.AlloyForgeRecipe;
+import wraith.alloyforgery.recipe.AlloyForgeRecipeInput;
+import wraith.alloyforgery.utils.EndecUtils;
+
 import java.util.*;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -85,8 +91,7 @@ public class ForgeControllerBlockEntity extends BlockEntity implements Implement
         }
 
         @Override
-        public void set(int index, int value) {
-        }
+        public void set(int index, int value) {}
 
         @Override
         public int size() {
@@ -95,27 +100,27 @@ public class ForgeControllerBlockEntity extends BlockEntity implements Implement
     };
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        Inventories.readNbt(nbt, items);
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        Inventories.readNbt(nbt, items, registryLookup);
 
         this.currentSmeltTime = nbt.getInt("CurrentSmeltTime");
         this.fuel = nbt.getInt("Fuel");
 
         final var fluidNbt = nbt.getCompound("FuelFluidInput");
         this.fluidHolder.amount = fluidNbt.getLong("Amount");
-        this.fluidHolder.variant = FluidVariant.fromNbt(nbt.getCompound("Variant"));
+        this.fluidHolder.variant = EndecUtils.FLUID_VARIANT.decodeFully(NbtDeserializer::of, nbt.getCompound("Variant"));
     }
 
     @Override
-    public void writeNbt(NbtCompound nbt) {
-        Inventories.writeNbt(nbt, items);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        Inventories.writeNbt(nbt, items, registryLookup);
 
         nbt.putInt("Fuel", Math.round(fuel));
         nbt.putInt("CurrentSmeltTime", currentSmeltTime);
 
         final var fluidNbt = new NbtCompound();
         fluidNbt.putLong("Amount", this.fluidHolder.amount);
-        fluidNbt.put("Variant", this.fluidHolder.variant.toNbt());
+        fluidNbt.put("Variant", EndecUtils.FLUID_VARIANT.encodeFully(NbtSerializer::of, this.fluidHolder.variant));
         nbt.put("FuelFluidInput", fluidNbt);
     }
 
@@ -231,8 +236,10 @@ public class ForgeControllerBlockEntity extends BlockEntity implements Implement
 
         //--
 
-        if (this.recipeCache.isEmpty() || !this.recipeCache.get().value().matches(this, this.world)) {
-            this.recipeCache = this.world.getRecipeManager().getFirstMatch(AlloyForgeRecipe.Type.INSTANCE, this, this.world);
+        var recipeInput = new AlloyForgeRecipeInput(this);
+
+        if (this.recipeCache.isEmpty() || !this.recipeCache.get().value().matches(recipeInput, this.world)) {
+            this.recipeCache = this.world.getRecipeManager().getFirstMatch(AlloyForgeRecipe.Type.INSTANCE, recipeInput, this.world);
         }
 
         if (this.recipeCache.isEmpty() && this.requiredTierToCraft != -1) {
@@ -264,14 +271,14 @@ public class ForgeControllerBlockEntity extends BlockEntity implements Implement
                 AlloyForgery.FORGE_PARTICLES.spawn(this.world, Vec3d.of(this.pos), this.facing);
             }
         } else {
-            var remainderList = AlloyForgeRecipe.gatherRemainders(recipeCache.get(), this);
+            var remainderList = AlloyForgeRecipe.gatherRemainders(recipeCache.get(), recipeInput);
 
             if (remainderList != null) this.handleForgingRemainders(remainderList);
 
             var outputStack = this.getStack(10);
-            var recipeOutput = recipe.craft(this, this.world.getRegistryManager());
+            var recipeOutput = recipe.craft(recipeInput, this.world.getRegistryManager());
 
-            recipe.consumeIngredients(this);
+            recipe.consumeIngredients(recipeInput);
 
             if (outputStack.isEmpty()) {
                 this.setStack(10, recipeOutput);
@@ -311,7 +318,7 @@ public class ForgeControllerBlockEntity extends BlockEntity implements Implement
 
         if (slotStack.isEmpty()) {
             this.setStack(i, itemstack);
-        } else if (ItemStack.areItemsEqual(slotStack, itemstack) && ItemStack.canCombine(slotStack, itemstack)) {
+        } else if (ItemStack.areItemsEqual(slotStack, itemstack) && ItemStack.areItemsAndComponentsEqual(slotStack, itemstack)) {
             itemstack.increment(slotStack.getCount());
 
             if (itemstack.getCount() > itemstack.getMaxCount()) {

@@ -3,6 +3,7 @@ package wraith.alloyforgery.recipe;
 import com.google.gson.JsonSyntaxException;
 import com.mojang.logging.LogUtils;
 import io.wispforest.owo.serialization.Endec;
+import io.wispforest.owo.serialization.SerializationContext;
 import io.wispforest.owo.serialization.endec.BuiltInEndecs;
 import io.wispforest.owo.serialization.endec.StructEndecBuilder;
 import net.minecraft.item.Item;
@@ -34,10 +35,10 @@ public record OutputData(Integer count, @Nullable Item outputItem, @Nullable Lis
             OutputData::new
     );
 
-    public static final Endec<OutputData> ENDEC = NEW_FORMAT_ENDEC.catchErrors((deserializer, e) -> {
+    public static final Endec<OutputData> ENDEC = NEW_FORMAT_ENDEC.catchErrors((ctx, deserializer, e) -> {
         if(!(e instanceof InvalidOutputDataException)) throw new RuntimeException(e);
 
-        var data = OLD_FORMAT_ENDEC.decode(deserializer);
+        var data = OLD_FORMAT_ENDEC.decode(ctx, deserializer);
 
         //LOGGER.warn("Deprecated Alloy Forgery Recipe keys were used when decoding the recipe! Please change all 'id' -> 'item' and 'default' -> 'tag'. ");
 

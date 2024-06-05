@@ -10,21 +10,21 @@ public class AlloyForgeRecipeSerializer extends EndecRecipeSerializer<AlloyForge
 
     public static final StructEndec<AlloyForgeRecipe> RECIPE_ENDEC = new StructEndec<>() {
         @Override
-        public void encodeStruct(Serializer.Struct struct, AlloyForgeRecipe recipe) {
+        public void encodeStruct(SerializationContext ctx, Serializer.Struct struct, AlloyForgeRecipe recipe) {
             var rawData = recipe.rawRecipeData.orElseThrow(() -> new IllegalStateException("Unable to serialize Recipe due to not having the required RawRecipeData!"));
 
-            RawAlloyForgeRecipe.ENDEC.encodeStruct(struct, rawData);
+            RawAlloyForgeRecipe.ENDEC.encodeStruct(ctx, struct, rawData);
         }
 
         @Override
-        public AlloyForgeRecipe decodeStruct(Deserializer.Struct struct) {
-            var rawData = RawAlloyForgeRecipe.ENDEC.decodeStruct(struct);
+        public AlloyForgeRecipe decodeStruct(SerializationContext ctx, Deserializer.Struct struct) {
+            var rawData = RawAlloyForgeRecipe.ENDEC.decodeStruct(ctx, struct);
 
             return rawData.generateRecipe();
         }
     };
 
-    public static final Endec<AlloyForgeRecipe> ENDEC = Endec.ifAttr(SerializationAttribute.HUMAN_READABLE, RECIPE_ENDEC)
+    public static final Endec<AlloyForgeRecipe> ENDEC = Endec.ifAttr(SerializationAttributes.HUMAN_READABLE, RECIPE_ENDEC)
             .orElse(
                     StructEndecBuilder.of(
                             Endec.map(EndecUtils.INGREDIENT, Endec.INT).fieldOf("inputs", AlloyForgeRecipe::getIngredientsMap),

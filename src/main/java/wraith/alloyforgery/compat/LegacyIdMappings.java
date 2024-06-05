@@ -22,6 +22,6 @@ public class LegacyIdMappings {
     }
 
     private static Identifier id(String path) {
-        return new Identifier(AlloyForgery.MOD_ID, path);
+        return Identifier.of(AlloyForgery.MOD_ID, path);
     }
 }

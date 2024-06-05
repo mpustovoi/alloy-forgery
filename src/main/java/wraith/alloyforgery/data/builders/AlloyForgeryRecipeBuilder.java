@@ -160,7 +160,7 @@ public class AlloyForgeryRecipeBuilder implements CraftingRecipeJsonBuilder {
 
     @Override
     public void offerTo(RecipeExporter exporter, Identifier recipeId) { //Consumer<RecipeJsonProvider> exporter
-        var advancementId = new Identifier(recipeId.getNamespace(), "recipes/" + "alloy_forgery" + "/" + recipeId.getPath());
+        var advancementId = Identifier.of(recipeId.getNamespace(), "recipes/" + "alloy_forgery" + "/" + recipeId.getPath());
 
         this.validate(recipeId);
 
@@ -190,7 +190,7 @@ public class AlloyForgeryRecipeBuilder implements CraftingRecipeJsonBuilder {
 
     @Override
     public void offerTo(RecipeExporter exporter, String recipePath) {
-        Identifier identifier2 = new Identifier(recipePath);
+        Identifier identifier2 = Identifier.of(recipePath);
 
         if (identifier2.equals(this.getOutputId())) {
             throw new IllegalStateException("Recipe " + recipePath + " should remove its 'save' argument as it is equal to default one");

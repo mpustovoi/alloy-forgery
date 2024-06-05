@@ -95,7 +95,7 @@ public class AlloyForgeryTags {
     }
 
     private static Identifier common(String path) {
-        return new Identifier(COMMON_NAMESPACE, path);
+        return Identifier.of(COMMON_NAMESPACE, path);
     }
 
     private static Identifier alloyForgery(String path) {

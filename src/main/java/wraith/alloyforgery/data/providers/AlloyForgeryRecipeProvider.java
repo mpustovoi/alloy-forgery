@@ -2,13 +2,16 @@ package wraith.alloyforgery.data.providers;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
+import net.fabricmc.fabric.impl.resource.conditions.conditions.TagsPopulatedResourceCondition;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import wraith.alloyforgery.data.builders.AlloyForgeryRecipeBuilder;
+
+import java.util.concurrent.CompletableFuture;
 
 import static wraith.alloyforgery.data.AlloyForgeryTags.Items.*;
 
@@ -16,8 +19,8 @@ public class AlloyForgeryRecipeProvider extends FabricRecipeProvider {
 
     public RecipeExporter exporter;
 
-    public AlloyForgeryRecipeProvider(FabricDataOutput output) {
-        super(output);
+    public AlloyForgeryRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        super(output, registriesFuture);
     }
 
     @Override
@@ -37,78 +40,78 @@ public class AlloyForgeryRecipeProvider extends FabricRecipeProvider {
                 "zinc", RAW_ZINC_ORE_BLOCKS, ZINC_BLOCKS);
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createExtremeRawBlockRecipe, "tungsten", RAW_TUNGSTEN_ORE_BLOCKS, TUNGSTEN_BLOCKS,
-                new Identifier("techreborn:tungsten_block"),
-                new Identifier("indrev:tungsten_block"),
-                new Identifier("modern_industrialization:tungsten_block")
+                Identifier.of("techreborn:tungsten_block"),
+                Identifier.of("indrev:tungsten_block"),
+                Identifier.of("modern_industrialization:tungsten_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createAdvancedRawBlockRecipe, "titanium", RAW_TITANIUM_ORE_BLOCKS, TITANIUM_BLOCKS,
-                new Identifier("techreborn:titanium_block"),
-                new Identifier("modern_industrialization:titanium_block")
+                Identifier.of("techreborn:titanium_block"),
+                Identifier.of("modern_industrialization:titanium_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createStandardRawBlockRecipe, "tin", RAW_TIN_ORE_BLOCKS, TIN_BLOCKS,
-                new Identifier("mythicmetals:tin_block"),
-                new Identifier("techreborn:tin_block"),
-                new Identifier("indrev:tin_block"),
-                new Identifier("modern_industrialization:tin_block")
+                Identifier.of("mythicmetals:tin_block"),
+                Identifier.of("techreborn:tin_block"),
+                Identifier.of("indrev:tin_block"),
+                Identifier.of("modern_industrialization:tin_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createStandardRawBlockRecipe, "silver", RAW_SILVER_ORE_BLOCKS, SILVER_BLOCKS,
-                new Identifier("mythicmetals:silver_block"),
-                new Identifier("techreborn:silver_block"),
-                new Identifier("indrev:silver_block"),
-                new Identifier("modern_industrialization:silver_block")
+                Identifier.of("mythicmetals:silver_block"),
+                Identifier.of("techreborn:silver_block"),
+                Identifier.of("indrev:silver_block"),
+                Identifier.of("modern_industrialization:silver_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createAdvancedRawBlockRecipe, "platinum", RAW_PLATINUM_ORE_BLOCKS, PLATINUM_BLOCKS,
-                new Identifier("mythicmetals:platinum_block"),
-                new Identifier("modern_industrialization:platinum_block")
+                Identifier.of("mythicmetals:platinum_block"),
+                Identifier.of("modern_industrialization:platinum_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createExtremeRawBlockRecipe, "palladium", RAW_PALLADIUM_ORE_BLOCKS, PALLADIUM_BLOCKS,
-                new Identifier("mythicmetals:palladium_block")
+                Identifier.of("mythicmetals:palladium_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createAdvancedRawBlockRecipe, "osmium", RAW_OSMIUM_ORE_BLOCKS, OSMIUM_BLOCKS,
-                new Identifier("mythicmetals:osmium_block")
+                Identifier.of("mythicmetals:osmium_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createAdvancedRawBlockRecipe, "orichalcum", RAW_ORICHALCUM_ORE_BLOCKS, ORICHALCUM_BLOCKS,
-                new Identifier("mythicmetals:orichalcum_block")
+                Identifier.of("mythicmetals:orichalcum_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createStandardRawBlockRecipe, "nickel", RAW_NICKEL_ORE_BLOCKS, NICKEL_BLOCKS,
-                new Identifier("techreborn:nickel_block"),
-                new Identifier("modern_industrialization:nickel_block")
+                Identifier.of("techreborn:nickel_block"),
+                Identifier.of("modern_industrialization:nickel_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createAdvancedRawBlockRecipe, "mythril", RAW_MYTHRIL_ORE_BLOCKS, MYTHRIL_BLOCKS,
-                new Identifier("mythicmetals:mythril_block")
+                Identifier.of("mythicmetals:mythril_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createStandardRawBlockRecipe, "manganese", RAW_MANGANESE_ORE_BLOCKS, MANGANESE_BLOCKS,
-                new Identifier("mythicmetals:manganese_block"),
-                new Identifier("modern_industrialization:manganese_block")
+                Identifier.of("mythicmetals:manganese_block"),
+                Identifier.of("modern_industrialization:manganese_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createStandardRawBlockRecipe, "lead", RAW_LEAD_ORE_BLOCKS, LEAD_BLOCKS,
-                new Identifier("techreborn:lead_block"),
-                new Identifier("indrev:lead_block"),
-                new Identifier("modern_industrialization:lead_block")
+                Identifier.of("techreborn:lead_block"),
+                Identifier.of("indrev:lead_block"),
+                Identifier.of("modern_industrialization:lead_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createAdvancedRawBlockRecipe, "iridium", RAW_IRIDIUM_ORE_BLOCKS, IRIDIUM_BLOCKS,
-                new Identifier("techreborn:iridium_block"),
-                new Identifier("modern_industrialization:iridium_block")
+                Identifier.of("techreborn:iridium_block"),
+                Identifier.of("modern_industrialization:iridium_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createStandardRawBlockRecipe, "antimony", RAW_ANTIMONY_ORE_BLOCKS, ANTIMONY_BLOCKS,
-                new Identifier("modern_industrialization:antimony_block")
+                Identifier.of("modern_industrialization:antimony_block")
         );
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createAdvancedRawBlockRecipe, "adamantite", RAW_ADAMANTITE_ORE_BLOCKS, ADAMANTITE_BLOCKS,
-                new Identifier("mythicmetals:adamantite_block")
+                Identifier.of("mythicmetals:adamantite_block")
         );
     }
 
@@ -151,7 +154,7 @@ public class AlloyForgeryRecipeProvider extends FabricRecipeProvider {
     public void exportWithTagConditions(AFRBuilderMethod builder, String materialType, TagKey<Item> input, TagKey<Item> output, Identifier... priorities) {
         builder.build(materialType, output, input)
                 .addPriorityOutput(priorities)
-                .offerTo(this.withConditions(this.exporter, DefaultResourceConditions.tagsPopulated(output, input)));
+                .offerTo(this.withConditions(this.exporter, new TagsPopulatedResourceCondition(output, input)));
     }
 
     public interface AFRBuilderMethod {

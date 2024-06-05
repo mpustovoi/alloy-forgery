@@ -1,9 +1,7 @@
 package wraith.alloyforgery.block;
 
 import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.wispforest.owo.particles.ClientParticles;
-import io.wispforest.owo.serialization.StructEndec;
 import io.wispforest.owo.serialization.endec.StructEndecBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil;
@@ -26,7 +24,6 @@ import org.jetbrains.annotations.Nullable;
 import wraith.alloyforgery.AlloyForgery;
 import wraith.alloyforgery.forges.ForgeDefinition;
 import wraith.alloyforgery.forges.ForgeFuelRegistry;
-import wraith.alloyforgery.utils.EndecUtils;
 
 public class ForgeControllerBlock extends BlockWithEntity {
 
@@ -50,12 +47,10 @@ public class ForgeControllerBlock extends BlockWithEntity {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ItemActionResult onUseWithItem(ItemStack playerStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
-            final var playerStack = player.getStackInHand(hand);
-
             final var fuelDefinition = ForgeFuelRegistry.getFuelForItem(playerStack.getItem());
-            if (!(world.getBlockEntity(pos) instanceof ForgeControllerBlockEntity controller)) return ActionResult.PASS;
+            if (!(world.getBlockEntity(pos) instanceof ForgeControllerBlockEntity controller)) return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
 
             if (fuelDefinition.hasReturnType() && controller.canAddFuel(fuelDefinition.fuel())) {
@@ -65,11 +60,11 @@ public class ForgeControllerBlock extends BlockWithEntity {
                 }
                 controller.addFuel(fuelDefinition.fuel());
             } else if (FluidStorageUtil.interactWithFluidStorage(controller, player, hand)) {
-                return ActionResult.SUCCESS;
+                return ItemActionResult.SUCCESS;
             } else {
                 if (!controller.verifyMultiblock()) {
                     player.sendMessage(Text.translatable("message.alloy_forgery.invalid_multiblock").formatted(Formatting.GRAY), true);
-                    return ActionResult.SUCCESS;
+                    return ItemActionResult.SUCCESS;
                 }
 
                 final var screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
@@ -80,7 +75,7 @@ public class ForgeControllerBlock extends BlockWithEntity {
 
         }
 
-        return ActionResult.SUCCESS;
+        return ItemActionResult.SUCCESS;
     }
 
     @Override

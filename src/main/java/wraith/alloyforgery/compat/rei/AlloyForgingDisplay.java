@@ -1,6 +1,8 @@
 package wraith.alloyforgery.compat.rei;
 
 import com.google.common.collect.ImmutableMap;
+import io.wispforest.owo.serialization.format.nbt.NbtDeserializer;
+import io.wispforest.owo.serialization.format.nbt.NbtSerializer;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.display.DisplaySerializer;
@@ -12,6 +14,8 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.Identifier;
 import wraith.alloyforgery.recipe.AlloyForgeRecipe;
+import wraith.alloyforgery.utils.EndecUtils;
+
 import java.util.*;
 
 public class AlloyForgingDisplay implements Display {
@@ -112,7 +116,7 @@ public class AlloyForgingDisplay implements Display {
 
                 overrideTag.putInt("lower", overrideRange.lowerBound());
                 overrideTag.putInt("upper", overrideRange.upperBound());
-                overrideTag.put("stack", itemStack.getOrCreateNbt());
+                overrideTag.put("stack", EndecUtils.ITEM_STACK.encodeFully(NbtSerializer::of, itemStack));
 
                 overrides.add(overrideTag);
             });
@@ -144,7 +148,7 @@ public class AlloyForgingDisplay implements Display {
                 NbtCompound overrideTag = (NbtCompound) nbtElement;
 
                 AlloyForgeRecipe.OverrideRange range = new AlloyForgeRecipe.OverrideRange(overrideTag.getInt("lower"), overrideTag.getInt("upper"));
-                ItemStack stack = ItemStack.fromNbt(overrideTag.getCompound("stack"));
+                ItemStack stack = EndecUtils.ITEM_STACK.decodeFully(NbtDeserializer::of, overrideTag.getCompound("stack"));
 
                 builder.put(range, stack);
             });

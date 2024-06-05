@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class AlloyForgeryGlobalRemaindersLoader extends JsonDataLoader implements IdentifiableResourceReloadListener {
 
-    private static final Endec<ItemStack> RECIPE_RESULT_ENDEC = Endec.ofCodec(ItemStack.RECIPE_RESULT_CODEC);
+    private static final Endec<ItemStack> RECIPE_RESULT_ENDEC = Endec.ofCodec(ItemStack.VALIDATED_CODEC);
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -62,6 +62,6 @@ public class AlloyForgeryGlobalRemaindersLoader extends JsonDataLoader implement
 
     @Override
     public Identifier getFabricId() {
-        return new Identifier(AlloyForgery.MOD_ID, "forge_remainder");
+        return Identifier.of(AlloyForgery.MOD_ID, "forge_remainder");
     }
 }

@@ -38,4 +38,6 @@ public record AlloyForgeryMenuInfo(AlloyForgingDisplay display) implements Simpl
             clearInputSlots(context.getMenu());
         };
     }
+
+
 }
