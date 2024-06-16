@@ -2,9 +2,9 @@ package wraith.alloyforgery.forges;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import io.wispforest.endec.Endec;
 import io.wispforest.owo.moddata.ModDataConsumer;
-import io.wispforest.owo.serialization.Endec;
-import io.wispforest.owo.serialization.endec.BuiltInEndecs;
+import io.wispforest.owo.serialization.endec.MinecraftEndecs;
 import io.wispforest.owo.util.TagInjector;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -18,7 +18,7 @@ import java.util.*;
 
 public class ForgeRegistry {
 
-    public static Endec<ForgeDefinition> FORGE_DEFINITION = BuiltInEndecs.IDENTIFIER.xmap(
+    public static Endec<ForgeDefinition> FORGE_DEFINITION = MinecraftEndecs.IDENTIFIER.xmap(
             identifier -> {
                 return getForgeDefinition(identifier)
                         .orElseThrow(() -> new IllegalStateException("Unable to locate ForgerDefinition with Identifier: [ID: " + identifier + "]"));

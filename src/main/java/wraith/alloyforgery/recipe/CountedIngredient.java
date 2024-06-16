@@ -1,11 +1,8 @@
 package wraith.alloyforgery.recipe;
 
-import io.wispforest.owo.serialization.Endec;
-import io.wispforest.owo.serialization.SerializationContext;
-import io.wispforest.owo.serialization.format.edm.EdmDeserializer;
-import io.wispforest.owo.serialization.format.edm.EdmElement;
-import io.wispforest.owo.serialization.format.edm.EdmEndec;
-import io.wispforest.owo.serialization.format.edm.EdmSerializer;
+
+import io.wispforest.endec.Endec;
+import io.wispforest.endec.format.edm.*;
 import net.minecraft.recipe.Ingredient;
 import wraith.alloyforgery.utils.EndecUtils;
 
@@ -16,7 +13,7 @@ public record CountedIngredient(Ingredient ingredient, int count) {
         var object = element.<Map<String, EdmElement<?>>>cast();
 
         return new CountedIngredient(
-                EndecUtils.INGREDIENT.decode(EdmDeserializer.of(element)),
+                EndecUtils.INGREDIENT.decode(ctx, EdmDeserializer.of(element)),
                 object.containsKey("count") ? object.get("count").<Number>cast().intValue() : 1
         );
     }, (ctx, countedIngredient) -> {

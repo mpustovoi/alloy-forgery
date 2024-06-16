@@ -33,8 +33,8 @@ dependencies {
     modCompileOnly ("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei_version}")
     modCompileOnly ("me.shedaniel.cloth:basic-math:0.6.1")
 
-    modLocalRuntime ("me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}")
-    modLocalRuntime ("dev.architectury:architectury-fabric:${project.arch_api_version}") { exclude(module: "fabric-api") }
+//    modLocalRuntime ("me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}")
+//    modLocalRuntime ("dev.architectury:architectury-fabric:${project.arch_api_version}") { exclude(module: "fabric-api") }
 
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 

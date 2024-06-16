@@ -3,12 +3,11 @@ package wraith.alloyforgery.recipe;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
-import io.wispforest.owo.serialization.Endec;
-import io.wispforest.owo.serialization.StructEndec;
-import io.wispforest.owo.serialization.endec.BuiltInEndecs;
-import io.wispforest.owo.serialization.endec.StructEndecBuilder;
+import io.wispforest.endec.Endec;
+import io.wispforest.endec.StructEndec;
+import io.wispforest.endec.impl.StructEndecBuilder;
+import io.wispforest.owo.serialization.endec.MinecraftEndecs;
 import it.unimi.dsi.fastutil.Hash;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenCustomHashMap;
 import net.fabricmc.loader.api.FabricLoader;
@@ -16,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Pair;
-import net.minecraft.util.Util;
 import org.apache.commons.lang3.mutable.MutableInt;
 import wraith.alloyforgery.AlloyForgery;
 
@@ -97,8 +95,8 @@ public record RawAlloyForgeRecipe(Map<Ingredient, Integer> inputs, OutputData ou
     });
 
     public static Endec<AlloyForgeRecipe.PendingOverride> PENDING_OVERRIDE = StructEndecBuilder.of(
-            BuiltInEndecs.ofRegistry(Registries.ITEM).optionalFieldOf("item", AlloyForgeRecipe.PendingOverride::item, () -> null),
-            BuiltInEndecs.ofRegistry(Registries.ITEM).optionalFieldOf("id", orderride -> null, () -> null), //TODO: REMOVE LATER
+            MinecraftEndecs.ofRegistry(Registries.ITEM).optionalFieldOf("item", AlloyForgeRecipe.PendingOverride::item, () -> null),
+            MinecraftEndecs.ofRegistry(Registries.ITEM).optionalFieldOf("id", orderride -> null, () -> null), //TODO: REMOVE LATER
             Endec.INT.fieldOf("count", AlloyForgeRecipe.PendingOverride::count),
             (item, item2, count) -> {
                 if(item == null) item = item2;

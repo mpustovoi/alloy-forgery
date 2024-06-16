@@ -2,8 +2,8 @@ package wraith.alloyforgery.recipe;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonSyntaxException;
-import io.wispforest.owo.serialization.Endec;
-import io.wispforest.owo.serialization.endec.StructEndecBuilder;
+import io.wispforest.endec.Endec;
+import io.wispforest.endec.impl.StructEndecBuilder;
 import io.wispforest.owo.util.RecipeRemainderStorage;
 import it.unimi.dsi.fastutil.ints.Int2IntLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;

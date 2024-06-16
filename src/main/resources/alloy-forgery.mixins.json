@@ -7,7 +7,6 @@
     "DataPackContentsMixin",
     "DefaultedRegistryMixin",
     "HopperBlockEntityAccessor",
-    "IngredientAccessor",
     "RecipeManagerAccessor",
     "RecipeManagerMixin",
     "RecipeEntryMixin",

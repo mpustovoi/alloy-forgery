@@ -2,10 +2,9 @@ package wraith.alloyforgery.recipe;
 
 import com.google.gson.JsonSyntaxException;
 import com.mojang.logging.LogUtils;
-import io.wispforest.owo.serialization.Endec;
-import io.wispforest.owo.serialization.SerializationContext;
-import io.wispforest.owo.serialization.endec.BuiltInEndecs;
-import io.wispforest.owo.serialization.endec.StructEndecBuilder;
+import io.wispforest.endec.Endec;
+import io.wispforest.endec.impl.StructEndecBuilder;
+import io.wispforest.owo.serialization.endec.MinecraftEndecs;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
@@ -21,17 +20,17 @@ public record OutputData(Integer count, @Nullable Item outputItem, @Nullable Lis
 
     private static final Endec<OutputData> OLD_FORMAT_ENDEC = StructEndecBuilder.of(
             Endec.INT.fieldOf("count", OutputData::count),
-            BuiltInEndecs.ofRegistry(Registries.ITEM).optionalFieldOf("id", OutputData::outputItem, () -> null),
-            BuiltInEndecs.IDENTIFIER.listOf().optionalFieldOf("priority", OutputData::items, () -> null),
-            BuiltInEndecs.unprefixedTagKey(RegistryKeys.ITEM).optionalFieldOf("default", OutputData::defaultTag, () -> null),
+            MinecraftEndecs.ofRegistry(Registries.ITEM).optionalFieldOf("id", OutputData::outputItem, () -> null),
+            MinecraftEndecs.IDENTIFIER.listOf().optionalFieldOf("priority", OutputData::items, () -> null),
+            MinecraftEndecs.unprefixedTagKey(RegistryKeys.ITEM).optionalFieldOf("default", OutputData::defaultTag, () -> null),
             OutputData::new
     );
 
     private static final Endec<OutputData> NEW_FORMAT_ENDEC = StructEndecBuilder.of(
             Endec.INT.fieldOf("count", OutputData::count),
-            BuiltInEndecs.ofRegistry(Registries.ITEM).optionalFieldOf("item", OutputData::outputItem, () -> null),
-            BuiltInEndecs.IDENTIFIER.listOf().optionalFieldOf("priority", OutputData::items, () -> null),
-            BuiltInEndecs.unprefixedTagKey(RegistryKeys.ITEM).optionalFieldOf("tag", OutputData::defaultTag, () -> null),
+            MinecraftEndecs.ofRegistry(Registries.ITEM).optionalFieldOf("item", OutputData::outputItem, () -> null),
+            MinecraftEndecs.IDENTIFIER.listOf().optionalFieldOf("priority", OutputData::items, () -> null),
+            MinecraftEndecs.unprefixedTagKey(RegistryKeys.ITEM).optionalFieldOf("tag", OutputData::defaultTag, () -> null),
             OutputData::new
     );
 

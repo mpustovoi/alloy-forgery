@@ -2,20 +2,15 @@ package wraith.alloyforgery.forges;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.*;
+import io.wispforest.endec.Endec;
 import io.wispforest.owo.registration.ComplexRegistryAction;
 import io.wispforest.owo.registration.RegistryHelper;
-import io.wispforest.owo.serialization.Endec;
-import io.wispforest.owo.serialization.endec.BuiltInEndecs;
-import io.wispforest.owo.serialization.endec.StructEndecBuilder;
-import io.wispforest.owo.serialization.format.json.JsonDeserializer;
+import io.wispforest.owo.serialization.endec.MinecraftEndecs;
 import net.minecraft.block.Block;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
 
 public record ForgeDefinition(int forgeTier,
                               float speedMultiplier,
@@ -54,9 +49,9 @@ public record ForgeDefinition(int forgeTier,
         this(forgeTier, speedMultiplier, fuelCapacity, (int) (BASE_MAX_SMELT_TIME / speedMultiplier), material, additionalMaterials);
     }
 
-    public static final Endec<Block> BLOCK_ENDEC = BuiltInEndecs.ofRegistry(Registries.BLOCK);
+    public static final Endec<Block> BLOCK_ENDEC = MinecraftEndecs.ofRegistry(Registries.BLOCK);
 
-    public static Endec<ForgeDefinition> FORGE_DEFINITION = BuiltInEndecs.IDENTIFIER.xmap(
+    public static Endec<ForgeDefinition> FORGE_DEFINITION = MinecraftEndecs.IDENTIFIER.xmap(
             identifier -> {
                 return ForgeRegistry.getForgeDefinition(identifier)
                         .orElseThrow(() -> new IllegalStateException("Unable to locate ForgerDefinition with Identifier: [ID: " + identifier + "]"));

@@ -1,8 +1,9 @@
 package wraith.alloyforgery.block;
 
 import com.mojang.serialization.MapCodec;
+import io.wispforest.endec.impl.StructEndecBuilder;
 import io.wispforest.owo.particles.ClientParticles;
-import io.wispforest.owo.serialization.endec.StructEndecBuilder;
+import io.wispforest.owo.serialization.CodecUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil;
 import net.minecraft.block.*;
@@ -40,10 +41,11 @@ public class ForgeControllerBlock extends BlockWithEntity {
 
     @Override
     protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return StructEndecBuilder.of(
-                ForgeDefinition.FORGE_DEFINITION.fieldOf("forge_definition", s -> forgeDefinition),
-                ForgeControllerBlock::new
-        ).mapCodec();
+        return CodecUtils.toMapCodec(
+                StructEndecBuilder.of(
+                        ForgeDefinition.FORGE_DEFINITION.fieldOf("forge_definition", s -> forgeDefinition),
+                        ForgeControllerBlock::new
+                ));
     }
 
     @Override

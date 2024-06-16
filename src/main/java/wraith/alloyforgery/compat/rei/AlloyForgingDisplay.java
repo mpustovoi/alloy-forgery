@@ -1,6 +1,7 @@
 package wraith.alloyforgery.compat.rei;
 
 import com.google.common.collect.ImmutableMap;
+import io.wispforest.owo.serialization.endec.MinecraftEndecs;
 import io.wispforest.owo.serialization.format.nbt.NbtDeserializer;
 import io.wispforest.owo.serialization.format.nbt.NbtSerializer;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
@@ -116,7 +117,7 @@ public class AlloyForgingDisplay implements Display {
 
                 overrideTag.putInt("lower", overrideRange.lowerBound());
                 overrideTag.putInt("upper", overrideRange.upperBound());
-                overrideTag.put("stack", EndecUtils.ITEM_STACK.encodeFully(NbtSerializer::of, itemStack));
+                overrideTag.put("stack", MinecraftEndecs.ITEM_STACK.encodeFully(NbtSerializer::of, itemStack));
 
                 overrides.add(overrideTag);
             });
@@ -148,7 +149,7 @@ public class AlloyForgingDisplay implements Display {
                 NbtCompound overrideTag = (NbtCompound) nbtElement;
 
                 AlloyForgeRecipe.OverrideRange range = new AlloyForgeRecipe.OverrideRange(overrideTag.getInt("lower"), overrideTag.getInt("upper"));
-                ItemStack stack = EndecUtils.ITEM_STACK.decodeFully(NbtDeserializer::of, overrideTag.getCompound("stack"));
+                ItemStack stack = MinecraftEndecs.ITEM_STACK.decodeFully(NbtDeserializer::of, overrideTag.getCompound("stack"));
 
                 builder.put(range, stack);
             });
