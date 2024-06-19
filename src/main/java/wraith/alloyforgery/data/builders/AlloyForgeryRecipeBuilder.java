@@ -1,7 +1,6 @@
 package wraith.alloyforgery.data.builders;
 
 import com.mojang.logging.LogUtils;
-import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.AdvancementRequirements.CriterionMerger;
@@ -24,17 +23,18 @@ import wraith.alloyforgery.recipe.OutputData;
 import wraith.alloyforgery.recipe.RawAlloyForgeRecipe;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 public class AlloyForgeryRecipeBuilder implements CraftingRecipeJsonBuilder {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private final Map<String, AdvancementCriterion<?>> advancementBuilder = new LinkedHashMap();
+    private final Map<String, AdvancementCriterion<?>> advancementBuilder = new LinkedHashMap<>();
     private String group = "";
 
-    @Nullable private final TagKey<Item> outputTag;
-    @Nullable private final ItemConvertible outputItem;
+    @Nullable
+    private final TagKey<Item> outputTag;
+    @Nullable
+    private final ItemConvertible outputItem;
 
     //private final Ingredient output;
     private final int outputCount;
@@ -110,7 +110,7 @@ public class AlloyForgeryRecipeBuilder implements CraftingRecipeJsonBuilder {
 
     public AlloyForgeryRecipeBuilder overrideRange(int start, int end, @Nullable ItemConvertible output, int outputCount) {
         this.ranges.put(new AlloyForgeRecipe.OverrideRange(start, end),
-                new AlloyForgeRecipe.PendingOverride(output != null ? output.asItem() : null, outputCount));
+            new AlloyForgeRecipe.PendingOverride(output != null ? output.asItem() : null, outputCount));
 
         return this;
     }
@@ -125,7 +125,7 @@ public class AlloyForgeryRecipeBuilder implements CraftingRecipeJsonBuilder {
 
     public AlloyForgeryRecipeBuilder overrideRange(int index, boolean includeUpperValues, @Nullable ItemConvertible output, int outputCount) {
         this.ranges.put(new AlloyForgeRecipe.OverrideRange(index, includeUpperValues ? -1 : index),
-                new AlloyForgeRecipe.PendingOverride(output != null ? output.asItem() : null, outputCount));
+            new AlloyForgeRecipe.PendingOverride(output != null ? output.asItem() : null, outputCount));
 
         return this;
     }
@@ -165,19 +165,23 @@ public class AlloyForgeryRecipeBuilder implements CraftingRecipeJsonBuilder {
         this.validate(recipeId);
 
         Advancement.Builder builder = exporter.getAdvancementBuilder()
-                //.parent(ROOT)
-                .criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId))
-                .rewards(AdvancementRewards.Builder.recipe(recipeId))
-                .criteriaMerger(CriterionMerger.OR);
+            .criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId))
+            .rewards(AdvancementRewards.Builder.recipe(recipeId))
+            .criteriaMerger(CriterionMerger.OR);
 
         this.advancementBuilder.forEach(builder::criterion);
 
         var recipe = new RawAlloyForgeRecipe(
-                inputs,
-                new OutputData(this.outputCount, this.outputItem != null ? this.outputItem.asItem() : null, this.priorities.isEmpty() ? null : this.priorities, this.outputTag),
-                minimumTier,
-                fuelPerTick,
-                ranges
+            inputs,
+            new OutputData(
+                this.outputCount,
+                this.outputItem != null ? this.outputItem.asItem() : null,
+                this.priorities.isEmpty() ? null : this.priorities,
+                this.outputTag
+            ),
+            minimumTier,
+            fuelPerTick,
+            ranges
         );
 
         exporter.accept(recipeId, recipe.generateRecipe(true), builder.build(advancementId));

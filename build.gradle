@@ -19,7 +19,6 @@ repositories {
     }
     maven { url 'https://jitpack.io' }
     maven { url 'https://maven.blamejared.com' }
-    mavenLocal()
 }
 
 dependencies {
