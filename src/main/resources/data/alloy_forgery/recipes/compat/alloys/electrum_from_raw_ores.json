@@ -3,19 +3,19 @@
     {
       "condition": "fabric:item_tags_populated",
       "values": [
-        "c:raw_gold_ores",
+        "c:raw_ores/gold",
         "c:raw_silver_ors",
-        "c:electrum_ingots"
+        "c:ingots/electrum"
       ]
     }
   ],
   "type": "alloy_forgery:forging",
   "inputs": [
     {
-      "tag": "c:raw_gold_ores"
+      "tag": "c:raw_ores/gold"
     },
 	  {
-      "tag": "c:raw_silver_ores"
+      "tag": "c:raw_ores/silver"
     }
   ],
   "output": {
@@ -24,7 +24,7 @@
       "indrev:electrum_ingot",
       "modern_industrialization:electrum_ingot"
     ],
-    "tag": "c:electrum_ingots",
+    "tag": "c:ingots/electrum",
     "count": 2
   },
   "overrides": {

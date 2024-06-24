@@ -3,20 +3,20 @@
     {
       "condition": "fabric:item_tags_populated",
       "values": [
-        "c:tin_ingots",
-        "c:copper_ingots",
-        "c:bronze_ingots"
+        "c:ingots/tin",
+        "c:ingots/copper",
+        "c:ingots/bronze"
       ]
     }
   ],
   "type": "alloy_forgery:forging",
   "inputs": [
     {
-      "tag": "c:copper_ingots",
+      "tag": "c:ingots/copper",
       "count": 2
     },
 	  {
-      "tag": "c:tin_ingots"
+      "tag": "c:ingots/tin"
     }
   ],
   "output": {
@@ -26,7 +26,7 @@
       "indrev:bronze_ingot",
       "modern_industrialization:bronze_ingot"
     ],
-    "tag": "c:bronze_ingots",
+    "tag": "c:ingots/bronze",
     "count": 2
   },
   "min_forge_tier": 1,

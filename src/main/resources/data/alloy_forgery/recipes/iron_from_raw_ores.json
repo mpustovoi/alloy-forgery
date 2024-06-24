@@ -2,7 +2,7 @@
   "type": "alloy_forgery:forging",
   "inputs": [
     {
-      "tag": "c:raw_iron_ores",
+      "tag": "c:raw_materials/iron",
       "count": 2
     }
   ],

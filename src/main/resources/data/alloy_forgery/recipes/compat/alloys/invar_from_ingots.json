@@ -3,20 +3,20 @@
     {
       "condition": "fabric:item_tags_populated",
       "values": [
-        "c:iron_ingots",
-        "c:nickel_ingots",
-        "c:invar_ingots"
+        "c:ingots/iron",
+        "c:ingots/nickel",
+        "c:ingots/invar"
       ]
     }
   ],
   "type": "alloy_forgery:forging",
   "inputs": [
     {
-      "tag": "c:iron_ingots",
+      "tag": "c:ingots/iron",
       "count": 2
     },
     {
-      "tag": "c:nickel_ingots"
+      "tag": "c:ingots/nickel"
     }
   ],
   "output": {
@@ -24,7 +24,7 @@
       "techreborn:invar_ingot",
       "modern_industrialization:invar_ingot"
     ],
-    "tag": "c:invar_ingots",
+    "tag": "c:ingots/invar",
     "count": 3
   },
   "min_forge_tier": 1,

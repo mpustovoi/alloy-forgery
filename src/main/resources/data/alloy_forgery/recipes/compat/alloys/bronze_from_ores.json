@@ -5,7 +5,7 @@
       "values": [
         "c:tin_ores",
         "c:copper_ores",
-        "c:bronze_ingots"
+        "c:ingots/bronze"
       ]
     }
   ],
@@ -26,7 +26,7 @@
       "indrev:bronze_ingot",
       "modern_industrialization:bronze_ingot"
     ],
-    "tag": "c:bronze_ingots",
+    "tag": "c:ingots/bronze",
     "count": 4
   },
   "overrides": {

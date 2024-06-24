@@ -3,9 +3,9 @@
     {
       "condition": "fabric:item_tags_populated",
       "values": [
-        "c:copper_ores",
-        "c:zinc_ores",
-        "c:brass_ingots"
+        "c:ores/copper",
+        "c:ores/zinc",
+        "c:ingots/brass"
       ]
     }
   ],
@@ -24,7 +24,7 @@
       "create:brass_ingot",
       "techreborn:brass_ingot"
     ],
-    "tag": "c:brass_ingots",
+    "tag": "c:ingots/brass",
     "count": 3
   },
   "overrides": {

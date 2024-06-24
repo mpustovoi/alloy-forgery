@@ -3,20 +3,20 @@
     {
       "condition": "fabric:item_tags_populated",
       "values": [
-        "c:raw_copper_ores",
-        "c:raw_zinc_ores",
-        "c:brass_ingots"
+        "c:raw_materials/copper",
+        "c:raw_materials/zinc",
+        "c:ingots/brass"
       ]
     }
   ],
   "type": "alloy_forgery:forging",
   "inputs": [
     {
-      "tag": "c:raw_copper_ores",
+      "tag": "c:raw_materials/copper",
       "count": 2
     },
 	{
-      "tag": "c:raw_zinc_ores"
+      "tag": "c:raw_materials/zinc"
     }
   ],
   "output": {
@@ -24,7 +24,7 @@
       "create:brass_ingot",
       "techreborn:brass_ingot"
     ],
-    "tag": "c:brass_ingots",
+    "tag": "c:ingots/brass",
     "count": 3
   },
   "overrides": {

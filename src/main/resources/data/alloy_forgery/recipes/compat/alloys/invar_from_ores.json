@@ -3,16 +3,16 @@
     {
       "condition": "fabric:item_tags_populated",
       "values": [
-        "c:iron_ores",
+        "c:ores/iron",
         "c:nickel_ores",
-        "c:invar_ingots"
+        "c:ingots/invar"
       ]
     }
   ],
   "type": "alloy_forgery:forging",
   "inputs": [
     {
-      "tag": "c:iron_ores",
+      "tag": "c:ores/iron",
       "count": 2
     },
     {
@@ -24,7 +24,7 @@
       "techreborn:invar_ingot",
       "modern_industrialization:invar_ingot"
     ],
-    "tag": "c:invar_ingots",
+    "tag": "c:ingots/invar",
     "count": 3
   },
   "overrides": {

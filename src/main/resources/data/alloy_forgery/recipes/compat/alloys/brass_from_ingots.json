@@ -3,20 +3,20 @@
     {
       "condition": "fabric:item_tags_populated",
       "values": [
-        "c:copper_ingots",
-        "c:zinc_ingots",
-        "c:brass_ingots"
+        "c:ingots/copper",
+        "c:ingots/zinc",
+        "c:ingots/brass"
       ]
     }
   ],
   "type": "alloy_forgery:forging",
   "inputs": [
     {
-      "tag": "c:copper_ingots",
+      "tag": "c:ingots/copper",
       "count": 2
     },
     {
-      "tag": "c:zinc_ingots"
+      "tag": "c:ingots/zinc"
     }
   ],
   "output": {
@@ -24,7 +24,7 @@
       "create:brass_ingot",
       "techreborn:brass_ingot"
     ],
-    "tag": "c:brass_ingots",
+    "tag": "c:ingots/brass",
     "count": 3
   },
   "min_forge_tier": 1,

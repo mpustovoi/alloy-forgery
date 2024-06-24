@@ -3,19 +3,19 @@
     {
       "condition": "fabric:item_tags_populated",
       "values": [
-        "c:coal_ores",
-        "c:iron_ores",
-        "c:steel_ingots"
+        "c:ores/coal",
+        "c:ores/iron",
+        "c:ingots/steel"
       ]
     }
   ],
   "type": "alloy_forgery:forging",
   "inputs": [
     {
-      "tag": "c:iron_ores"
+      "tag": "c:ores/iron"
     },
 	  {
-      "tag": "c:coal_ores"
+      "tag": "c:ores/coal"
     }
   ],
   "output": {
@@ -24,7 +24,7 @@
       "indrev:steel_ingot",
       "modern_industrialization:steel_ingot"
     ],
-    "tag": "c:steel_ingots",
+    "tag": "c:ingots/steel",
     "count": 3
   },
   "overrides": {
