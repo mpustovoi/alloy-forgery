@@ -203,7 +203,7 @@ public class AlloyForgeryRecipeProvider extends FabricRecipeProvider {
         // ore block -> ingot compat //
         ///////////////////////////////
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createAdvancedOreRecipe,
-            "zinc_blocks", ORES_ZINC, INGOTS_ZINC);
+            "zinc_ingots_from_ores", ORES_ZINC, INGOTS_ZINC);
 
         this.exportWithTagConditions(AlloyForgeryRecipeProvider::createExtremeOreRecipe, "tungsten_ingots_from_ores", ORES_TUNGSTEN, INGOTS_TUNGSTEN,
             Identifier.of("techreborn:tungsten_ingot"),
