@@ -38,7 +38,7 @@ public record ForgeDefinition(int forgeTier,
                                 "item": "minecraft:blast_furnace"
                             }
                         },
-                        "result": {
+                        "id": {
                             "item": "{controller}",
                             "count": 1
                         }
