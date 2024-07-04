@@ -12,6 +12,7 @@ import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -73,9 +74,9 @@ public class AlloyForgeRecipe implements Recipe<AlloyForgeRecipeInput> {
         return this.secondaryID;
     }
 
-    public void finishRecipe(PendingRecipeData pendingData, Function<AlloyForgeRecipe, Identifier> lookup) {
+    public void finishRecipe(DynamicRegistryManager drm, PendingRecipeData pendingData, Function<AlloyForgeRecipe, Identifier> lookup) {
         if (pendingData.defaultTag() != null) {
-            final var itemEntryList = Registries.ITEM.getEntryList(pendingData.defaultTag().getLeft());
+            final var itemEntryList = drm.get(RegistryKeys.ITEM).getEntryList(pendingData.defaultTag().getLeft());
 
             itemEntryList.ifPresentOrElse(registryEntries -> {
                 this.output = registryEntries.get(0).value().getDefaultStack();
