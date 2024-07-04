@@ -4,7 +4,7 @@
       "condition": "fabric:item_tags_populated",
       "values": [
         "c:coal",
-        "c:raw_ores/iron",
+        "c:raw_materials/iron",
         "c:ingots/steel"
       ]
     }
@@ -12,7 +12,7 @@
   "type": "alloy_forgery:forging",
   "inputs": [
     {
-      "tag": "c:raw_ores/iron"
+      "tag": "c:raw_materials/iron"
     },
 	  {
       "tag": "c:coal"

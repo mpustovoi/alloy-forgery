@@ -4,7 +4,7 @@
       "condition": "fabric:item_tags_populated",
       "values": [
         "c:ores/iron",
-        "c:nickel_ores",
+        "c:ores/nickel",
         "c:ingots/invar"
       ]
     }
@@ -16,7 +16,7 @@
       "count": 2
     },
     {
-      "tag": "c:nickel_ores"
+      "tag": "c:ores/nickel"
     }
   ],
   "output": {

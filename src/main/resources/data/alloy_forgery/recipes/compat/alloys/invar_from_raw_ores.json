@@ -3,8 +3,8 @@
     {
       "condition": "fabric:item_tags_populated",
       "values": [
-        "c:raw_ores/iron",
-        "c:raw_nickel_ores",
+        "c:raw_materials/iron",
+        "c:raw_materials/nickel",
         "c:ingots/invar"
       ]
     }
@@ -12,11 +12,11 @@
   "type": "alloy_forgery:forging",
   "inputs": [
     {
-      "tag": "c:raw_ores/iron",
+      "tag": "c:raw_materials/iron",
       "count": 2
     },
 	{
-      "tag": "c:raw_nickel_ores"
+      "tag": "c:raw_materials/nickel"
     }
   ],
   "output": {

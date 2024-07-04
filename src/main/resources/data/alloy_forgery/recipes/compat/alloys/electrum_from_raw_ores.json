@@ -3,8 +3,8 @@
     {
       "condition": "fabric:item_tags_populated",
       "values": [
-        "c:raw_ores/gold",
-        "c:raw_silver_ors",
+        "c:raw_materials/gold",
+        "c:raw_materials/silver",
         "c:ingots/electrum"
       ]
     }
@@ -12,10 +12,10 @@
   "type": "alloy_forgery:forging",
   "inputs": [
     {
-      "tag": "c:raw_ores/gold"
+      "tag": "c:raw_materials/gold"
     },
 	  {
-      "tag": "c:raw_ores/silver"
+      "tag": "c:raw_materials/silver"
     }
   ],
   "output": {
