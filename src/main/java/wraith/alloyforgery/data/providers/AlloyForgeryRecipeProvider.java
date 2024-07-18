@@ -2,11 +2,12 @@ package wraith.alloyforgery.data.providers;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
-import net.fabricmc.fabric.impl.resource.conditions.conditions.TagsPopulatedResourceCondition;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -391,7 +392,7 @@ public class AlloyForgeryRecipeProvider extends FabricRecipeProvider {
 
     /**
      * Used to export recipes with an ordered list of tag priorities
-     * @see TagsPopulatedResourceCondition
+     * @see ResourceConditions#tagsPopulated(net.minecraft.registry.RegistryKey, TagKey[])
      * @param builder the recipe builder you are wrapping
      * @param name the name for the advancement, the recipe, and the recipe file name
      * @param input the item tag for valid recipe inputs
@@ -401,7 +402,7 @@ public class AlloyForgeryRecipeProvider extends FabricRecipeProvider {
     public void exportWithTagConditions(AFRBuilderMethod builder, String name, TagKey<Item> input, TagKey<Item> output, Identifier... priorities) {
         builder.build(name, output, input)
                 .addPriorityOutput(priorities)
-                .offerTo(this.withConditions(this.exporter, new TagsPopulatedResourceCondition(output, input)), "compat/forge_" + name);
+                .offerTo(this.withConditions(this.exporter, ResourceConditions.tagsPopulated(RegistryKeys.ITEM, output, input)), "compat/forge_" + name);
     }
 
     public interface AFRBuilderMethod {
