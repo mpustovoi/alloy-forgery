@@ -8,6 +8,7 @@ import io.wispforest.owo.serialization.format.edm.EdmOps;
 
 import java.util.Map;
 
+// TODO: migrate this to CodecUtils.toStructEndec when a new owo-lib version is released.
 public record MapCodecStructEndec<T>(MapCodec<T> codec) implements StructEndec<T> {
     @Override
     public void encodeStruct(SerializationContext ctx, Serializer<?> serializer, Serializer.Struct struct, T value) {
