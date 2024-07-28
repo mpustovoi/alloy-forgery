@@ -25,7 +25,7 @@ public class RecipeTagLoader extends SinglePreparationResourceReloader<Map<Ident
 
     private static final Map<Identifier, List<TagGroupLoader.TrackedEntry>> RAW_TAG_DATA = new HashMap<>();
 
-    private final DelayedTagGroupLoader<RecipeEntry<Recipe<?>>> tagGroupLoader = new DelayedTagGroupLoader<>("tags/recipes");
+    private final DelayedTagGroupLoader<RecipeEntry<Recipe<?>>> tagGroupLoader = new DelayedTagGroupLoader<>("tags/recipe");
 
     @Override
     protected Map<Identifier, List<TagGroupLoader.TrackedEntry>> prepare(ResourceManager manager, Profiler profiler) {
