@@ -7,6 +7,7 @@ import io.wispforest.endec.impl.StructEndecBuilder;
 import io.wispforest.owo.util.RecipeRemainderStorage;
 import it.unimi.dsi.fastutil.ints.Int2IntLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
+import net.minecraft.component.ComponentChanges;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
@@ -93,8 +94,12 @@ public class AlloyForgeRecipe implements Recipe<AlloyForgeRecipeInput> {
                 ItemStack stack = this.output.copy();
                 stack.setCount(override.count());
 
+                if(!override.components().isEmpty()) {
+                    stack.applyChanges(override.components());
+                }
+
                 overrides.put(range, stack);
-            } else if (override.stack() != null) {
+            } else {
                 overrides.put(range, override.stack());
             }
         });
@@ -346,24 +351,26 @@ public class AlloyForgeRecipe implements Recipe<AlloyForgeRecipeInput> {
         public static final Type INSTANCE = new Type();
     }
 
-    public record PendingRecipeData(@Nullable Pair<TagKey<Item>, Integer> defaultTag,
-                                    Map<OverrideRange, PendingOverride> unfinishedTierOverrides) {
-    }
+    public record PendingRecipeData(@Nullable Pair<TagKey<Item>, Integer> defaultTag, Map<OverrideRange, PendingOverride> unfinishedTierOverrides) { }
 
-    public record PendingOverride(@Nullable Item item, int count) {
+    public record PendingOverride(@Nullable Item item, int count, ComponentChanges components) {
         public boolean isCountOnly() {
             return this.item == null;
         }
 
         public static PendingOverride onlyCount(int count) {
-            return new PendingOverride(null, count);
+            return new PendingOverride(null, count, ComponentChanges.EMPTY);
         }
 
         public static PendingOverride ofItem(Item item, int count) {
-            return new PendingOverride(item, count);
+            return new PendingOverride(item, count, ComponentChanges.EMPTY);
         }
 
         public ItemStack stack(){
+            var stack = new ItemStack(item, count);
+
+            stack.applyChanges(components);
+
             return new ItemStack(item, count);
         }
     }

@@ -6,6 +6,7 @@ import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.AdvancementRequirements.CriterionMerger;
 import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.advancement.criterion.RecipeUnlockedCriterion;
+import net.minecraft.component.ComponentChanges;
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.item.Item;
@@ -110,7 +111,7 @@ public class AlloyForgeryRecipeBuilder implements CraftingRecipeJsonBuilder {
 
     public AlloyForgeryRecipeBuilder overrideRange(int start, int end, @Nullable ItemConvertible output, int outputCount) {
         this.ranges.put(new AlloyForgeRecipe.OverrideRange(start, end),
-            new AlloyForgeRecipe.PendingOverride(output != null ? output.asItem() : null, outputCount));
+            new AlloyForgeRecipe.PendingOverride(output != null ? output.asItem() : null, outputCount, ComponentChanges.EMPTY));
 
         return this;
     }
@@ -125,7 +126,7 @@ public class AlloyForgeryRecipeBuilder implements CraftingRecipeJsonBuilder {
 
     public AlloyForgeryRecipeBuilder overrideRange(int index, boolean includeUpperValues, @Nullable ItemConvertible output, int outputCount) {
         this.ranges.put(new AlloyForgeRecipe.OverrideRange(index, includeUpperValues ? -1 : index),
-            new AlloyForgeRecipe.PendingOverride(output != null ? output.asItem() : null, outputCount));
+            new AlloyForgeRecipe.PendingOverride(output != null ? output.asItem() : null, outputCount, ComponentChanges.EMPTY));
 
         return this;
     }

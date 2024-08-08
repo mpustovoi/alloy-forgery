@@ -4,7 +4,10 @@ import com.google.gson.JsonSyntaxException;
 import com.mojang.logging.LogUtils;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.impl.StructEndecBuilder;
+import io.wispforest.owo.serialization.CodecUtils;
 import io.wispforest.owo.serialization.endec.MinecraftEndecs;
+import net.fabricmc.fabric.impl.recipe.ingredient.builtin.ComponentsIngredient;
+import net.minecraft.component.ComponentChanges;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
@@ -15,9 +18,15 @@ import org.slf4j.Logger;
 
 import java.util.List;
 
-public record OutputData(Integer count, @Nullable Item outputItem, @Nullable List<Identifier> items, @Nullable TagKey<Item> defaultTag) {
+public record OutputData(Integer count, ComponentChanges components, @Nullable Item outputItem, @Nullable List<Identifier> items, @Nullable TagKey<Item> defaultTag) {
+
+    public OutputData(Integer count, @Nullable Item outputItem, @Nullable List<Identifier> items, @Nullable TagKey<Item> defaultTag) {
+        this(count, ComponentChanges.EMPTY, outputItem, items, defaultTag);
+    }
+
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    @Deprecated(forRemoval = true)
     private static final Endec<OutputData> OLD_FORMAT_ENDEC = StructEndecBuilder.of(
             Endec.INT.fieldOf("count", OutputData::count),
             MinecraftEndecs.ofRegistry(Registries.ITEM).optionalFieldOf("id", OutputData::outputItem, () -> null),
@@ -28,6 +37,7 @@ public record OutputData(Integer count, @Nullable Item outputItem, @Nullable Lis
 
     private static final Endec<OutputData> NEW_FORMAT_ENDEC = StructEndecBuilder.of(
             Endec.INT.fieldOf("count", OutputData::count),
+            CodecUtils.toEndec(ComponentChanges.CODEC).optionalFieldOf("components", OutputData::components, ComponentChanges.EMPTY),
             MinecraftEndecs.ofRegistry(Registries.ITEM).optionalFieldOf("item", OutputData::outputItem, () -> null),
             MinecraftEndecs.IDENTIFIER.listOf().optionalFieldOf("priority", OutputData::items, () -> null),
             MinecraftEndecs.unprefixedTagKey(RegistryKeys.ITEM).optionalFieldOf("tag", OutputData::defaultTag, () -> null),

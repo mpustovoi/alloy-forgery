@@ -7,10 +7,12 @@ import com.mojang.serialization.JsonOps;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.StructEndec;
 import io.wispforest.endec.impl.StructEndecBuilder;
+import io.wispforest.owo.serialization.CodecUtils;
 import io.wispforest.owo.serialization.endec.MinecraftEndecs;
 import it.unimi.dsi.fastutil.Hash;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenCustomHashMap;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.component.ComponentChanges;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
@@ -98,10 +100,11 @@ public record RawAlloyForgeRecipe(Map<Ingredient, Integer> inputs, OutputData ou
             MinecraftEndecs.ofRegistry(Registries.ITEM).optionalFieldOf("item", AlloyForgeRecipe.PendingOverride::item, () -> null),
             MinecraftEndecs.ofRegistry(Registries.ITEM).optionalFieldOf("id", orderride -> null, () -> null), //TODO: REMOVE LATER
             Endec.INT.fieldOf("count", AlloyForgeRecipe.PendingOverride::count),
-            (item, item2, count) -> {
+            CodecUtils.toEndec(ComponentChanges.CODEC).optionalFieldOf("components", AlloyForgeRecipe.PendingOverride::components, ComponentChanges.EMPTY),
+            (item, item2, count, components) -> {
                 if(item == null) item = item2;
 
-                return new AlloyForgeRecipe.PendingOverride(item, count);
+                return new AlloyForgeRecipe.PendingOverride(item, count, components);
             }
     );
 
@@ -149,6 +152,10 @@ public record RawAlloyForgeRecipe(Map<Ingredient, Integer> inputs, OutputData ou
                 stack.setCount(entry.getValue().count());
             } else {
                 stack = entry.getValue().stack();
+            }
+
+            if(!entry.getValue().components().isEmpty()) {
+                stack.applyChanges(entry.getValue().components());
             }
 
             builder.put(entry.getKey(), stack);
