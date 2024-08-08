@@ -12,6 +12,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -85,6 +86,10 @@ public final class RecipeInjector {
      */
     public RecipeManager manager() {
         return this.manager;
+    }
+
+    public RegistryWrapper.WrapperLookup lookup() {
+        return ((RecipeManagerAccessor) this.manager).af$getRegistryLookup();
     }
 
     /**

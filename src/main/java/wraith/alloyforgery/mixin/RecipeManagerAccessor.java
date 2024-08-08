@@ -2,6 +2,7 @@ package wraith.alloyforgery.mixin;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
@@ -20,4 +21,7 @@ public interface RecipeManagerAccessor {
 
     @Accessor("recipesById")
     void af$setRecipesById(Map<Identifier, RecipeEntry<?>> recipesById);
+
+    @Accessor("registryLookup")
+    RegistryWrapper.WrapperLookup af$getRegistryLookup();
 }

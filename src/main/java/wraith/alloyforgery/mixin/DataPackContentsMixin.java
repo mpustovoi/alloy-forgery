@@ -33,5 +33,7 @@ public abstract class DataPackContentsMixin {
         }
 
         AlloyForgeRecipe.PENDING_RECIPES.forEach((recipe, pendingRecipeData) -> recipe.finishRecipe(this.reloadableRegistries.getRegistryManager(), pendingRecipeData, key -> map.getOrDefault(key, Identifier.of(AlloyForgery.MOD_ID, "unknown_recipe"))));
+
+        AlloyForgeRecipe.PENDING_RECIPES.clear();
     }
 }
