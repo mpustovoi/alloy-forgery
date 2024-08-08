@@ -37,9 +37,6 @@ public class ForgeRegistry {
     private static final Map<Identifier, ForgeDefinition> FORGE_DEFINITION_REGISTRY = new HashMap<>();
     private static final Map<Identifier, Block> CONTROLLER_BLOCK_REGISTRY = new HashMap<>();
 
-    private static final Set<Block> CONTROLLER_BLOCKS = new HashSet<>();
-    private static final Set<Block> CONTROLLER_BLOCKS_VIEW = Collections.unmodifiableSet(CONTROLLER_BLOCKS);
-
     static void registerDefinition(Identifier forgeDefinitionId, ForgeDefinition definition) {
         final var controllerBlock = new ForgeControllerBlock(definition);
         final var controllerBlockRegistryId = AlloyForgery.id(Registries.BLOCK.getId(definition.material()).getPath() + "_forge_controller");
@@ -72,14 +69,10 @@ public class ForgeRegistry {
         return CONTROLLER_BLOCK_REGISTRY.values().stream().toList();
     }
 
-    public static Set<Block> controllerBlocksView() {
-        return CONTROLLER_BLOCKS_VIEW;
-    }
-
     private static void store(Identifier id, ForgeDefinition definition, ForgeControllerBlock block) {
         FORGE_DEFINITION_REGISTRY.put(id, definition);
         CONTROLLER_BLOCK_REGISTRY.put(id, block);
-        CONTROLLER_BLOCKS.add(block);
+        AlloyForgery.FORGE_CONTROLLER_BLOCK_ENTITY.addSupportedBlock(block);
     }
 
     public static final class Loader implements ModDataConsumer {

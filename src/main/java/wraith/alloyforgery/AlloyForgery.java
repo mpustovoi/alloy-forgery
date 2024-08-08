@@ -31,6 +31,7 @@ import wraith.alloyforgery.recipe.*;
 import wraith.alloyforgery.utils.RecipeInjector;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class AlloyForgery implements ModInitializer {
 
@@ -40,7 +41,7 @@ public class AlloyForgery implements ModInitializer {
 
     public static final AlloyForgeryConfig CONFIG = AlloyForgeryConfig.createAndLoad();
 
-    public static BlockEntityType<ForgeControllerBlockEntity> FORGE_CONTROLLER_BLOCK_ENTITY = ForgeControllerBlockEntity.Type.INSTANCE;
+    public static BlockEntityType<ForgeControllerBlockEntity> FORGE_CONTROLLER_BLOCK_ENTITY = BlockEntityType.Builder.create(ForgeControllerBlockEntity::new).build();
     public static ScreenHandlerType<AlloyForgeScreenHandler> ALLOY_FORGE_SCREEN_HANDLER_TYPE;
 
     private static final ParticleSystemController CONTROLLER = new ParticleSystemController(id("particles"));
@@ -94,8 +95,6 @@ public class AlloyForgery implements ModInitializer {
 
         OwoFreezer.registerFreezeCallback(() -> FluidStorage.SIDED.registerSelf(AlloyForgery.FORGE_CONTROLLER_BLOCK_ENTITY));
     }
-
-
 
     public static Identifier id(String path) {
         return Identifier.of(MOD_ID, path);

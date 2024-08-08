@@ -511,13 +511,4 @@ public class ForgeControllerBlockEntity extends BlockEntity implements Implement
             return InsertionOnlyStorage.super.iterator();
         }
     }
-
-    public static class Type extends BlockEntityType<ForgeControllerBlockEntity> {
-
-        public static Type INSTANCE = new Type();
-
-        private Type() {
-            super(ForgeControllerBlockEntity::new, ForgeRegistry.controllerBlocksView(), null);
-        }
-    }
 }

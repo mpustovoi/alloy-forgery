@@ -54,7 +54,6 @@ public class ForgeControllerBlock extends BlockWithEntity {
             final var fuelDefinition = ForgeFuelRegistry.getFuelForItem(playerStack.getItem());
             if (!(world.getBlockEntity(pos) instanceof ForgeControllerBlockEntity controller)) return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-
             if (fuelDefinition.hasReturnType() && controller.canAddFuel(fuelDefinition.fuel())) {
                 if (!player.getAbilities().creativeMode) {
                     player.getStackInHand(hand).decrement(1);
@@ -74,7 +73,6 @@ public class ForgeControllerBlock extends BlockWithEntity {
                     player.openHandledScreen(screenHandlerFactory);
                 }
             }
-
         }
 
         return ItemActionResult.SUCCESS;
