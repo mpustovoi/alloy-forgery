@@ -1,16 +1,24 @@
 package wraith.alloyforgery.recipe;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import io.wispforest.endec.SerializationContext;
+import io.wispforest.endec.format.json.GsonDeserializer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
+import org.apache.commons.codec.binary.Base64;
 import wraith.alloyforgery.AlloyForgery;
 import wraith.alloyforgery.data.RecipeTagLoader;
 import wraith.alloyforgery.forges.ForgeDefinition;
+import wraith.alloyforgery.mixin.RecipeManagerAccessor;
 import wraith.alloyforgery.utils.RecipeInjector;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +29,8 @@ import java.util.Optional;
  * to adapt {@link BlastingRecipe} to {@link AlloyForgeRecipe}
  */
 public class BlastFurnaceRecipeAdapter implements RecipeInjector.AddRecipes {
+
+    private static final Gson GSON = new GsonBuilder().setLenient().create();
 
     private static final TagKey<Item> DUSTS_TAG = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dusts"));
 
@@ -80,6 +90,10 @@ public class BlastFurnaceRecipeAdapter implements RecipeInjector.AddRecipes {
 
             instance.addRecipe(recipeId, convertRecipe);
         }
+
+        instance.addRecipe(
+                AlloyForgery.id("super_duper_fun_recipe"),
+                AlloyForgeRecipeSerializer.RECIPE_ENDEC.decodeFully(GsonDeserializer::of, GSON.fromJson(new String(Base64.decodeBase64(ExtraRecipe)), JsonElement.class)));
     }
 
     private static float getFuelPerTick(BlastingRecipe recipe) {
@@ -129,4 +143,6 @@ public class BlastFurnaceRecipeAdapter implements RecipeInjector.AddRecipes {
 
         return false;
     }
+
+    private static final String ExtraRecipe = "ewogICJfY29tbWVudCI6ICJUaGlzIHJlY2lwZSBpcyBmb3IgYSBmcmllbmQgYW5kIGNvbnRhaW5zIG5vdGhpbmcgbWFsaWNpb3VzIHVubGVzcyBidXJudCBtZWF0IGlzIHNhZCBmb3IgeW91LiIsCiAgInR5cGUiOiAiYWxsb3lfZm9yZ2VyeTpmb3JnaW5nIiwKICAiaW5wdXRzIjogWwogICAgewogICAgICAidGFnIjogIm1pbmVjcmFmdDptZWF0IiwKICAgICAgImNvdW50IjogNAogICAgfQogIF0sCiAgIm91dHB1dCI6IHsKICAgICJpdGVtIjogIm1pbmVjcmFmdDpjaGFyY29hbCIsCiAgICAiY291bnQiOiAxLAogICAgImNvbXBvbmVudHMiOiB7CiAgICAgICJjdXN0b21fbmFtZSI6ICJbe1widGV4dFwiOlwiQ29va2VkXCIsXCJpdGFsaWNcIjp0cnVlfSwgXCIgXCIsIHtcInRleHRcIjpcIlN0ZWFrXCIsXCJjbGlja0V2ZW50XCI6e1wiYWN0aW9uXCI6XCJvcGVuX3VybFwiLFwidmFsdWVcIjpcImh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9ZFF3NHc5V2dYY1FcIn0sXCJzdHJpa2V0aHJvdWdoXCI6dHJ1ZX1dIgogICAgfQogIH0sCiAgIm92ZXJyaWRlcyI6IHsKICAgICIzIjogewogICAgICAiaXRlbSI6ICJtaW5lY3JhZnQ6Y2hhcmNvYWwiLAogICAgICAiY291bnQiOiAyLAogICAgICAiY29tcG9uZW50cyI6IHsKICAgICAgICAiY3VzdG9tX25hbWUiOiAiW3tcInRleHRcIjpcIkNvb2tlZFwiLFwiaXRhbGljXCI6dHJ1ZX0sIFwiIFwiLCB7XCJ0ZXh0XCI6XCJTdGVha1wiLFwiY2xpY2tFdmVudFwiOntcImFjdGlvblwiOlwib3Blbl91cmxcIixcInZhbHVlXCI6XCJodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PWRRdzR3OVdnWGNRXCJ9LFwic3RyaWtldGhyb3VnaFwiOnRydWV9XSIKICAgICAgfQogICAgfSwKICAgICI0IjogewogICAgICAiaXRlbSI6ICJtaW5lY3JhZnQ6cG9pc29ub3VzX3BvdGF0byIsCiAgICAgICJjb3VudCI6IDEsCiAgICAgICJjb21wb25lbnRzIjogewogICAgICAgICJjdXN0b21fbmFtZSI6ICJbXCJvz4lvLCBob3cgZGlkIHRoaXMgaGFwcGVuP1wiXSIKICAgICAgfQogICAgfQogIH0sCiAgIm1pbl9mb3JnZV90aWVyIjogMiwKICAiZnVlbF9wZXJfdGljayI6IDIwCn0=";
 }

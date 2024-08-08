@@ -3,7 +3,7 @@
   "inputs": [
     {
       "tag": "minecraft:smelts_to_glass",
-      "count": "2"
+      "count": 2
     }
   ],
   "output": {
