@@ -4,7 +4,7 @@ package wraith.alloyforgery.data;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import io.wispforest.endec.Endec;
-import io.wispforest.endec.format.json.GsonDeserializer;
+import io.wispforest.endec.format.gson.GsonDeserializer;
 import io.wispforest.owo.serialization.CodecUtils;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.item.Item;

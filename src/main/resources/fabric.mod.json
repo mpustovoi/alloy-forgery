@@ -45,9 +45,9 @@
   ],
   "depends": {
     "fabricloader": ">=0.10",
-    "fabric": ">=0.102.0+1.21",
+    "fabric": ">=0.102.0",
     "minecraft": ">=1.20.3",
-    "owo": ">=0.12.0"
+    "owo": ">=0.12.11"
   },
   "suggests": {
     "craft-this-from-that": "*",
