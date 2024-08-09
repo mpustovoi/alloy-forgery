@@ -1,12 +1,10 @@
 package wraith.alloyforgery.recipe;
 
-import com.google.gson.JsonSyntaxException;
 import com.mojang.logging.LogUtils;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.impl.StructEndecBuilder;
 import io.wispforest.owo.serialization.CodecUtils;
 import io.wispforest.owo.serialization.endec.MinecraftEndecs;
-import net.fabricmc.fabric.impl.recipe.ingredient.builtin.ComponentsIngredient;
 import net.minecraft.component.ComponentChanges;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -15,7 +13,6 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-
 import java.util.List;
 
 public record OutputData(Integer count, ComponentChanges components, @Nullable Item outputItem, @Nullable List<Identifier> items, @Nullable TagKey<Item> defaultTag) {

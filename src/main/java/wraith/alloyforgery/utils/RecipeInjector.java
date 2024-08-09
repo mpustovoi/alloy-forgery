@@ -1,14 +1,10 @@
 package wraith.alloyforgery.utils;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.*;
 import com.mojang.logging.LogUtils;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.Registries;

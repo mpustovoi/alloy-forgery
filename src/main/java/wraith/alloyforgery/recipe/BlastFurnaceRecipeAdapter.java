@@ -1,9 +1,7 @@
 package wraith.alloyforgery.recipe;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import com.google.gson.*;
 import io.wispforest.endec.format.gson.GsonDeserializer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,14 +10,11 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import org.apache.commons.codec.binary.Base64;
 import wraith.alloyforgery.AlloyForgery;
 import wraith.alloyforgery.data.RecipeTagLoader;
 import wraith.alloyforgery.forges.ForgeDefinition;
 import wraith.alloyforgery.utils.RecipeInjector;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Adapter class that takes advantage of {@link RecipeInjector}
@@ -90,7 +85,7 @@ public class BlastFurnaceRecipeAdapter implements RecipeInjector.AddRecipes {
 
         instance.addRecipe(
                 AlloyForgery.id("super_duper_fun_recipe"),
-                AlloyForgeRecipeSerializer.RECIPE_ENDEC.decodeFully(GsonDeserializer::of, GSON.fromJson(new String(Base64.decodeBase64(ExtraRecipe)), JsonElement.class)));
+                AlloyForgeRecipeSerializer.RECIPE_ENDEC.decodeFully(GsonDeserializer::of, GSON.fromJson(new String(Base64.getDecoder().decode(ExtraRecipe)), JsonElement.class)));
     }
 
     private static float getFuelPerTick(BlastingRecipe recipe) {

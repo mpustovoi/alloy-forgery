@@ -2,7 +2,7 @@ package wraith.alloyforgery.recipe;
 
 import io.wispforest.endec.*;
 import io.wispforest.endec.impl.StructEndecBuilder;
-import io.wispforest.owo.serialization.*;
+import io.wispforest.owo.serialization.EndecRecipeSerializer;
 import io.wispforest.owo.serialization.endec.MinecraftEndecs;
 import wraith.alloyforgery.utils.EndecUtils;
 

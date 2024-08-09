@@ -30,9 +30,6 @@ import wraith.alloyforgery.forges.FuelDataLoader;
 import wraith.alloyforgery.recipe.*;
 import wraith.alloyforgery.utils.RecipeInjector;
 
-import java.util.HashMap;
-import java.util.Set;
-
 public class AlloyForgery implements ModInitializer {
 
     public static final OwoNetChannel CHANNEL = OwoNetChannel.create(id("main"));

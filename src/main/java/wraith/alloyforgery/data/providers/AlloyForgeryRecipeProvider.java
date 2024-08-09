@@ -12,7 +12,6 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import wraith.alloyforgery.data.builders.AlloyForgeryRecipeBuilder;
-
 import java.util.concurrent.CompletableFuture;
 
 import static wraith.alloyforgery.data.AlloyForgeryTags.Items.*;

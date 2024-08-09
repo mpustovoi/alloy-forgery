@@ -1,8 +1,6 @@
 package wraith.alloyforgery.compat;
 
-import io.wispforest.owo.config.annotation.Config;
-import io.wispforest.owo.config.annotation.Modmenu;
-import io.wispforest.owo.config.annotation.SectionHeader;
+import io.wispforest.owo.config.annotation.*;
 import wraith.alloyforgery.AlloyForgery;
 
 @Modmenu(modId = AlloyForgery.MOD_ID)

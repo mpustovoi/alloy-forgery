@@ -1,11 +1,10 @@
 package wraith.alloyforgery.utils;
 
-import com.mojang.serialization.*;
+import com.mojang.serialization.MapCodec;
 import io.wispforest.endec.*;
 import io.wispforest.endec.format.edm.EdmElement;
 import io.wispforest.endec.format.edm.EdmEndec;
 import io.wispforest.owo.serialization.format.edm.EdmOps;
-
 import java.util.Map;
 
 // TODO: migrate this to CodecUtils.toStructEndec when a new owo-lib version is released.

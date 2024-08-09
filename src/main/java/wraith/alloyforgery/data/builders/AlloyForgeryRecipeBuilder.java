@@ -1,28 +1,20 @@
 package wraith.alloyforgery.data.builders;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.AdvancementCriterion;
+import net.minecraft.advancement.*;
 import net.minecraft.advancement.AdvancementRequirements.CriterionMerger;
-import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.advancement.criterion.RecipeUnlockedCriterion;
 import net.minecraft.component.ComponentChanges;
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-import wraith.alloyforgery.recipe.AlloyForgeRecipe;
-import wraith.alloyforgery.recipe.OutputData;
-import wraith.alloyforgery.recipe.RawAlloyForgeRecipe;
-
+import wraith.alloyforgery.recipe.*;
 import java.util.*;
 
 public class AlloyForgeryRecipeBuilder implements CraftingRecipeJsonBuilder {

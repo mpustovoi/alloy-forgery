@@ -15,8 +15,6 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.Identifier;
 import wraith.alloyforgery.recipe.AlloyForgeRecipe;
-import wraith.alloyforgery.utils.EndecUtils;
-
 import java.util.*;
 
 public class AlloyForgingDisplay implements Display {

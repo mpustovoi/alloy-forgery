@@ -19,7 +19,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Pair;
 import org.apache.commons.lang3.mutable.MutableInt;
 import wraith.alloyforgery.AlloyForgery;
-
 import java.util.*;
 
 public record RawAlloyForgeRecipe(Map<Ingredient, Integer> inputs, OutputData outputData,

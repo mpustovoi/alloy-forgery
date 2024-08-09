@@ -13,7 +13,8 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
@@ -33,12 +34,12 @@ import net.minecraft.util.math.*;
 import org.jetbrains.annotations.Nullable;
 import wraith.alloyforgery.AlloyForgeScreenHandler;
 import wraith.alloyforgery.AlloyForgery;
-import wraith.alloyforgery.forges.*;
+import wraith.alloyforgery.forges.ForgeDefinition;
+import wraith.alloyforgery.forges.ForgeFuelRegistry;
 import wraith.alloyforgery.mixin.HopperBlockEntityAccessor;
 import wraith.alloyforgery.recipe.AlloyForgeRecipe;
 import wraith.alloyforgery.recipe.AlloyForgeRecipeInput;
 import wraith.alloyforgery.utils.EndecUtils;
-
 import java.util.*;
 
 @SuppressWarnings("UnstableApiUsage")
